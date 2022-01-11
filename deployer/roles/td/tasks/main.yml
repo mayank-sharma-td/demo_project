@@ -1,0 +1,29 @@
+---
+- name: Creates temp directory {{ td_project }}
+  file:
+    path: /tmp/{{ td_project }}
+    state: directory
+
+- name: copy {{ td_project }} into /tmp
+  command: cp -r ../projects/{{ td_project }} /tmp
+
+- name: replace variables in digdag template
+  template:
+    src: "{{ item }}"
+    dest: /tmp/{{ td_project }}/{{ item | basename }}
+  with_fileglob:
+    - /tmp/{{ td_project }}/*.dig
+
+- name: Deploy {{ td_project }} to Treasure data {{ env }}
+  shell: bash -x deploy.sh {{ td_project }} {{ td_api_key }} {{ td_endpoint }}
+  args:
+    chdir: roles/td/scripts/
+  register: out
+
+- debug: msg="{{ out.stdout }}"
+- debug: msg="{{ out.stderr }}"
+
+
+
+
+

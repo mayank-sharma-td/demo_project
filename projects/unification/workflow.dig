@@ -1,0 +1,7 @@
+_export:
+ td:
+   database: td_dev_unification
+   table: order_detail_test
+
++task:
+ echo>: ${td.database}
