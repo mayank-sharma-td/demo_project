@@ -29,6 +29,7 @@ jobs:
         working-directory: ./deployer
         run: |
           td apikey:set $TD_API_KEY -f;
+          td workflow <<< "y"
           ansible-playbook -i ansible.prod.inventory deploy.yml --extra-vars "td_api_key=$TD_API_KEY";
           
           
