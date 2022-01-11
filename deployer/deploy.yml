@@ -1,7 +1,7 @@
 ---
 - hosts: all
   connection: local
-
+#mention project details
   roles:
     - { role: td, td_project: ingestion }
     - { role: td, td_project: staging }
