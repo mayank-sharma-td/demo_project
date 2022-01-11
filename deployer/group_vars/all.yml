@@ -1,0 +1,3 @@
+---
+td_endpoint: https://api.treasuredata.com
+digdag_docker_image: digdag/digdag-python:3.9
