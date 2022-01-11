@@ -1,0 +1,38 @@
+name: Deploy Treasure Workflow To Dev instance
+
+on: 
+  push:
+    branches: dev
+  
+  
+jobs:
+  deploy_master_to_td_prod:
+    runs-on: ubuntu-18.04
+    name: deploy to td dev
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+
+      - name: install ruby dev
+        run: sudo apt-get update; sudo apt-get install -y build-essential;
+
+      - name: Install td toolbelt
+        run: gem install td
+
+      - name: Get td version
+        run: td --version
+
+      - name: Run ansible deploy playbook
+        env:
+          TD_API_KEY: ${{ secrets.td_demo_api_key }}
+          MARKETS: td_to_td_copy
+        working-directory: ./deployer
+        run: |
+          td apikey:set $TD_API_KEY -f;
+          ansible-playbook -i ansible.dev.inventory deploy.yml --extra-vars "td_api_key=$TD_API_KEY;
+          
+          
