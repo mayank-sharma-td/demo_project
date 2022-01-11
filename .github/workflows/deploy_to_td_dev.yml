@@ -28,7 +28,7 @@ jobs:
 
       - name: Run ansible deploy playbook
         env:
-          TD_API_KEY: ${{ secrets.td_demo_api_key }}
+          TD_API_KEY: ${{ secrets.td_apikey_demo }}
           MARKETS: td_to_td_copy
         working-directory: ./deployer
         run: |
