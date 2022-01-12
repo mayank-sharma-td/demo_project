@@ -1,6 +1,6 @@
 _export:
  td:
-   database: td_dev_ingestion
+   database: td_{{ env }}_ingestion
    table: order_detail_test
 
 +task:
